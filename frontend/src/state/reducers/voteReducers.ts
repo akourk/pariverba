@@ -1,28 +1,15 @@
+import { ActionType } from "../action-types";
+import { Action } from "../actions/index"
+
 const initialState = 0;
-
-interface UpvoteAction {
-    type: "upvote"
-    payload: number
-}
-
-interface DownvoteAction {
-    type: "downvote"
-    payload: number
-}
-
-interface ClearvoteAction {
-    type: "clearvote"
-}
-
-type Action = UpvoteAction | DownvoteAction | ClearvoteAction
 
 const reducer = (state: number = initialState, action: Action) => {
     switch (action.type) {
-        case "upvote":
+        case ActionType.UPVOTE:
             return state + action.payload;
-        case "downvote":
+        case ActionType.DOWNVOTE:
             return state - action.payload;
-        case "clearvote":
+        case ActionType.CLEARVOTE:
             return 0;
         default:
             return state
