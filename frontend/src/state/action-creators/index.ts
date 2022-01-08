@@ -1,8 +1,9 @@
 import { ActionType } from "../action-types"
 import { Dispatch } from "redux"
+import { Action } from "../actions/index"
 
 export const upvote = (amount: number) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<Action>) => {
         dispatch({
             type: ActionType.UPVOTE,
             payload: amount
@@ -11,19 +12,18 @@ export const upvote = (amount: number) => {
 }
 
 export const downvote = (amount: number) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<Action>) => {
         dispatch({
-            type: ActionType.UPVOTE,
+            type: ActionType.DOWNVOTE,
             payload: amount
         })
     }
 }
 
-export const clearvote = (amount: number) => {
-    return (dispatch: Dispatch) => {
+export const clearvote = () => {
+    return (dispatch: Dispatch<Action>) => {
         dispatch({
-            type: ActionType.UPVOTE,
-            payload: amount
+            type: ActionType.CLEARVOTE
         })
     }
 }
