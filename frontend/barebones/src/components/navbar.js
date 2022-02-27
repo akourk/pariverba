@@ -1,16 +1,37 @@
-import { Box, Container, Flex } from "@chakra-ui/react";
+import { Box, Heading, Container, Flex, Menu, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
 import React from "react";
 import AddNewStory from "./addNewStory";
+import { ColorModeSwitcher } from "../ColorModeSwitcher";
+import ThemedBox from "./ThemedBox";
 
 const Navbar = () => {
     return (
-        <Box position="sticky" top={0} p={4} bg="gray.100" zIndex={1}>
-            <Container maxW="md" centerContent>
-                <Flex justifyContent="flex-end" w="100%" position="sticky" top={0}>
-                    <AddNewStory />
+        <ThemedBox
+            py={2}
+            px={[0, 0, 10, 10]}
+            display="flex"
+            justifyContent="flex-start"
+            alignItems="center"
+            mb={7}
+        >
+            {/* <Container maxW="md" centerContent> */}
+
+                
+                <Flex w="100%" position="sticky" top={0}>
+                    <Menu>
+                        <Heading ml={[2, 4]} fontSize={['1.3rem', '2.25rem']}>
+                        pariverbis
+                        </Heading>
+                        
+                        <AddNewStory />
+                        <ColorModeSwitcher />
+                    </Menu>
+                    
                 </Flex>
-            </Container>
-        </Box>
+
+                
+            {/* </Container> */}
+        </ThemedBox>
     );
 };
 
