@@ -1,4 +1,4 @@
-import { Box, Heading, Container, Flex, Menu, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
+import { Box, Heading, Spacer, Container, Flex, Menu, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
 import React from "react";
 import AddNewStory from "./addNewStory";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
@@ -22,7 +22,8 @@ const Navbar = () => {
                         <Heading ml={[2, 4]} fontSize={['1.3rem', '2.25rem']}>
                         pariverbis
                         </Heading>
-                        
+                        <Spacer />
+                        {/* <MenuDivider /> */}
                         <AddNewStory />
                         <ColorModeSwitcher />
                     </Menu>

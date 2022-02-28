@@ -1,9 +1,12 @@
-import { IconButton, Text, VStack } from "@chakra-ui/react";
+import { IconButton, Flex, Text, VStack } from "@chakra-ui/react";
 import React, { useEfect, useEffect, useState } from "react";
 import { FiChevronUp, FiChevronDown } from "react-icons/fi";
 import { db } from "../lib/firebase";
 
 const VoteButtons = ({ story }) => {
+    const size = 6;
+    const upVoteColor = 'blue.500';
+    const downVoteColor = 'orange.500';
     const [isVoting, setVoting] = useState(false);
     const [votedStories, setVotedStories] = useState([]);
 
@@ -59,6 +62,7 @@ const VoteButtons = ({ story }) => {
             updatedAt: date.toUTCString()
         });
 
+        calculateKarma();
         handleDisablingOfVoting(story.id);
         setVoting(false);
     };
@@ -71,37 +75,78 @@ const VoteButtons = ({ story }) => {
         }
     };
 
+    const calculateKarma = () => {
+        return story.upVotesCount - story.downVotesCount;
+    }
+
+    const determineKarmaColor = () => {
+        if (calculateKarma() < 0) {
+            return downVoteColor;
+        } else {
+            return upVoteColor;
+        }
+    }
+
     return (
         <>
-        <VStack>
+        <Flex direction="column" alignItems="center" mr={3}>
             <IconButton
-                size="lg"
-                colorScheme="purple"
-                aria-label="UpVote"
-                icon={<FiChevronUp />}
+                role="group"
                 onClick={() => handleClick("upvote")}
                 isLoading={isVoting}
                 isDisabled={checkIfStoryIsAlreadyVoted()}
-            />
-            <Text bg="gray.100" rounded="md" w="100%" p={1}>
-                {story.upVotesCount}
+                backgroundColor="inherit"
+                // color={VoteValue === 1 ? upvoteColor : null}
+                color={votedStories.indexOf(story.id) === 1 ? upVoteColor : null}
+                boxShadow="none !important"
+                icon={<FiChevronUp />}
+                />
+            <Text fontSize={3.5 * size} color={determineKarmaColor()}>
+                    {calculateKarma()}
             </Text>
-        </VStack>
-        <VStack>
             <IconButton
-                size="lg"
-                colorScheme="yellow"
-                aria-label="DownVote"
-                icon={<FiChevronDown />}
+                role="group"
                 onClick={() => handleClick("downvote")}
                 isLoading={isVoting}
                 isDisabled={checkIfStoryIsAlreadyVoted()}
+                backgroundColor="inherit"
+                // color={VoteValue === 1 ? upvoteColor : null}
+                color={votedStories.indexOf(story.id) === -1 ? downVoteColor : null}
+                boxShadow="none !important"
+                icon={<FiChevronDown />}
             />
-            <Text bg="gray.100" rounded="md" w="100%" p={1}>
-                {story.downVotesCount}
-            </Text>
-        </VStack>
+        </Flex>
         </>
+        // <>
+        // <VStack>
+        //     <IconButton
+        //         size="lg"
+        //         colorScheme="purple"
+        //         aria-label="UpVote"
+        //         icon={<FiChevronUp />}
+        //         onClick={() => handleClick("upvote")}
+        //         isLoading={isVoting}
+        //         isDisabled={checkIfStoryIsAlreadyVoted()}
+        //     />
+        //     <Text bg="gray.20" rounded="md" w="100%" p={1}>
+        //         {story.upVotesCount}
+        //     </Text>
+        // </VStack>
+        // <VStack>
+        //     <IconButton
+        //         size="lg"
+        //         colorScheme="yellow"
+        //         aria-label="DownVote"
+        //         icon={<FiChevronDown />}
+        //         onClick={() => handleClick("downvote")}
+        //         isLoading={isVoting}
+        //         isDisabled={checkIfStoryIsAlreadyVoted()}
+        //     />
+        //     <Text bg="gray.20" rounded="md" w="100%" p={1}>
+        //         {story.downVotesCount}
+        //     </Text>
+        // </VStack>
+        // </>
     );
 };
 
