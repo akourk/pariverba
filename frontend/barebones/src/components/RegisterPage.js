@@ -29,6 +29,7 @@ class RegisterPage extends React.Component {
         super(props);
 
         this.state = {
+            email: '',
             username: '',
             password: '',
             confirmPassword: '',
@@ -44,12 +45,24 @@ class RegisterPage extends React.Component {
     // }
 
     render() {
-        const { username, password, confirmPassword, doNotMatchError } = this.state;
+        const { email, username, password, confirmPassword, doNotMatchError } = this.state;
         const { isLoading, error } = this.props;
         return (
             <Box w={300} m="auto">
                 <form>
                     <Stack spacing={3}>
+                    <FormControl>
+                            <Input
+                                value={email}
+                                onChange={(e) => this.setState({ email: e.target.value })}
+                                id="email-input"
+                                variant="filled"
+                                type="text"
+                                placeholder="email"
+                                size="md"
+                                isRequired
+                            />
+                        </FormControl>
                         <FormControl>
                             <Input
                                 value={username}

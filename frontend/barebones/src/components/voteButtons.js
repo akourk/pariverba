@@ -1,6 +1,6 @@
-import { IconButton, Flex, Text, VStack } from "@chakra-ui/react";
-import React, { useEfect, useEffect, useState } from "react";
-import { FiChevronUp, FiChevronDown } from "react-icons/fi";
+import { IconButton, Flex, Text } from "@chakra-ui/react";
+import { TriangleUpIcon, TriangleDownIcon } from '@chakra-ui/icons';
+import React, { useEffect, useState } from "react";
 import { db } from "../lib/firebase";
 
 const VoteButtons = ({ story }) => {
@@ -9,7 +9,20 @@ const VoteButtons = ({ story }) => {
     const downVoteColor = 'orange.500';
     const [isVoting, setVoting] = useState(false);
     const [votedStories, setVotedStories] = useState([]);
-
+    const upVoteIcon = (
+        <TriangleUpIcon
+            w={size}
+            h={size}
+            _hover={{ color: upVoteColor }}
+        />
+    )
+    const downVoteIcon = (
+        <TriangleDownIcon
+            w={size}
+            h={size}
+            _hover={{ color: downVoteColor }}
+        />
+    )
     useEffect(() => {
         // Fetch the previously voted items from localStorage. See https://stackoverflow.com/a/52607524/1928724 on why we need "JSON.parse" and update the item on localStorage. Return "true" if the user has already voted the post.
         const votesFromLocalStorage = localStorage.getItem("votes") || [];
@@ -99,7 +112,7 @@ const VoteButtons = ({ story }) => {
                 // color={VoteValue === 1 ? upvoteColor : null}
                 color={votedStories.indexOf(story.id) === 1 ? upVoteColor : null}
                 boxShadow="none !important"
-                icon={<FiChevronUp />}
+                icon={upVoteIcon}
                 />
             <Text fontSize={3.5 * size} color={determineKarmaColor()}>
                     {calculateKarma()}
@@ -113,7 +126,7 @@ const VoteButtons = ({ story }) => {
                 // color={VoteValue === 1 ? upvoteColor : null}
                 color={votedStories.indexOf(story.id) === -1 ? downVoteColor : null}
                 boxShadow="none !important"
-                icon={<FiChevronDown />}
+                icon={downVoteIcon}
             />
         </Flex>
         </>
