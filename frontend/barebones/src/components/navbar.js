@@ -1,10 +1,13 @@
-import { Box, Heading, Spacer, Container, Flex, Menu, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
+import { Button, Heading, Spacer, Flex, Menu, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
 import React from "react";
 import AddNewStory from "./addNewStory";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
 import ThemedBox from "./ThemedBox";
+import LoginRegister from "./LoginRegister";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+    const location = useLocation();
     return (
         <ThemedBox
             py={2}
@@ -19,12 +22,21 @@ const Navbar = () => {
                 
                 <Flex w="100%" position="sticky" top={0}>
                     <Menu>
-                        <Heading ml={[2, 4]} fontSize={['1.3rem', '2.25rem']}>
+                        <Heading 
+                            ml={[2, 4]} 
+                            fontSize={['1.3rem', '2.25rem']}
+                            as={Link}
+                            to={{ 
+                                pathname: '/', 
+                                state: {
+                                    prevPathname: location.pathname,
+                                },
+                            }}>
                         pariverbis
                         </Heading>
                         <Spacer />
-                        {/* <MenuDivider /> */}
                         <AddNewStory />
+                        <LoginRegister />
                         <ColorModeSwitcher />
                     </Menu>
                     

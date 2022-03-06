@@ -38,9 +38,12 @@ const AddNewStory = () => {
 
     return (
         <>
-        <Button onClick={onOpen} colorScheme="blue">
-            Add new story
-        </Button>
+        <HStack>
+            <Button marginRight="2" onClick={onOpen} colorScheme="blue">
+                Add new story
+            </Button>
+        </HStack>
+        
 
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
             <ModalOverlay>
