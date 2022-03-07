@@ -1,28 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Box, Stack, FormControl, Input, Button, FormErrorMessage } from "@chakra-ui/react";
-
-
-
-
-
-// const RegisterPage = () => {
-
-//     return (
-//         <Box w={300} m="auto">
-//             <form>
-//                 <Stack spacing={3}>
-//                     <Input
-//                         value={username}
-
-//                     />
-//                 </Stack>
-//             </form>
-//         </Box>
-//     )
-// }
-
-// export default RegisterPage;
+import { Box, Stack, FormControl, Input, Button, FormErrorMessage, Text } from "@chakra-ui/react";
+import { db } from "../lib/firebase";
 
 class RegisterPage extends React.Component {
     constructor(props) {
@@ -37,19 +16,31 @@ class RegisterPage extends React.Component {
         };
     }
 
-    // handleSubmit = async (e) => {
-    //     try {
-    //         e.preventDefault();
+    handleSubmit = async (e) => {
+        try {
+            e.preventDefault();
+            const { email, username, password, confirmPassword } = this.state;
 
-    //     }
-    // }
+            if (password !== confirmPassword) {
+                return this.setState({ doNotMatchError: 'Passwords Do Not Match.'});
+            }
+            const date = new Date();
+            await db.collection("users").add({
+                email,
+                username,
+                password,
+                verified: false,
+                createdAt: date.toUTCString(),
+            });
+        } catch (e) {}
+    };
 
     render() {
         const { email, username, password, confirmPassword, doNotMatchError } = this.state;
         const { isLoading, error } = this.props;
         return (
             <Box w={300} m="auto">
-                <form>
+                <form onSubmit={this.handleSubmit}>
                     <Stack spacing={3}>
                     <FormControl>
                             <Input
@@ -103,6 +94,10 @@ class RegisterPage extends React.Component {
                         <Button type="submit" isLoading={isLoading}>
                             Register
                         </Button>
+                        <Text>
+                            passwords are stored in plain text and db doesn't check for duplicates.
+                            don't assume anything is secure.
+                        </Text>
                     </Stack>
                 </form>
             </Box>
