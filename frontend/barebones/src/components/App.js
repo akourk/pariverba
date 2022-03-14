@@ -11,6 +11,7 @@ import ThemedBox from './ThemedBox';
 import RegisterPage from './RegisterPage';
 import LoginPage from './LoginPage';
 import StoryList from './StoryList'
+import { AuthProvider } from '../context/AuthContext';
 
 const App = () => {
     const [stories, setStories] = useState([]);
@@ -50,39 +51,40 @@ const App = () => {
 
     return (
         <>
-        <ChakraProvider theme={theme}>
-            <Router>
-                <ThemedBox minHeight="100vh" light="gray.300" dark="gray.800">
-                    <Navbar />
-                    {/* <Container maxW="md" centerContent p={8}> */}
-                    <Container centerContent p={2}>
-                        <VStack spacing={2} w="100%">
-                            <Routes>
-                                <Route path="/login"
-                                element={
-                                    <LoginPage />
-                                }>
-                                </Route>
-                                <Route path="/register"
-                                element={
-                                    <RegisterPage />
-                                }>
-                                </Route>
-                                <Route path="/"
-                                element={
-                                    <StoryList />
-                                }>
-                                </Route>
-                            </Routes>
-                            {/* {stories.map((story) => (
-                                <Story story={story} key={story.id} />
-                            ))} */}
-                        </VStack>
-                    </Container>
-                </ThemedBox>
-            </Router>
-            
-        </ChakraProvider>
+        <AuthProvider>
+            <ChakraProvider theme={theme}>
+                <Router>
+                    <ThemedBox minHeight="100vh" light="gray.300" dark="gray.800">
+                        <Navbar />
+                        {/* <Container maxW="md" centerContent p={8}> */}
+                        <Container centerContent p={1}>
+                            <VStack spacing={2} w="100%">
+                                <Routes>
+                                    <Route path="/login"
+                                    element={
+                                        <LoginPage />
+                                    }>
+                                    </Route>
+                                    <Route path="/register"
+                                    element={
+                                        <RegisterPage />
+                                    }>
+                                    </Route>
+                                    <Route path="/"
+                                    element={
+                                        <StoryList />
+                                    }>
+                                    </Route>
+                                </Routes>
+                                {/* {stories.map((story) => (
+                                    <Story story={story} key={story.id} />
+                                ))} */}
+                            </VStack>
+                        </Container>
+                    </ThemedBox>
+                </Router>
+            </ChakraProvider>
+        </AuthProvider>
         </>
         // <VoteValueContextProvider>
         //     <div>

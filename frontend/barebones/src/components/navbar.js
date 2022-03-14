@@ -1,13 +1,16 @@
-import { Button, Heading, Spacer, Flex, Menu, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
+import { Button, Heading, Box, Spacer, Flex, Menu, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
 import React from "react";
 import AddNewStory from "./addNewStory";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
 import ThemedBox from "./ThemedBox";
 import LoginRegister from "./LoginRegister";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"
 
 const Navbar = () => {
     const location = useLocation();
+    const { currentUser } = useAuth()
+
     return (
         <ThemedBox
             py={2}
@@ -20,7 +23,7 @@ const Navbar = () => {
             {/* <Container maxW="md" centerContent> */}
 
                 
-                <Flex w="100%" position="sticky" top={0}>
+                <Flex w="100%" position="sticky" top={0} alignItems={'center'}>
                     <Menu>
                         <Heading 
                             ml={[2, 4]} 
@@ -35,7 +38,15 @@ const Navbar = () => {
                         pariverbis
                         </Heading>
                         <Spacer />
-                        <AddNewStory />
+                        {currentUser ? 
+                        <>
+                            <Box> {JSON.stringify(currentUser.email)} </Box> 
+                            <AddNewStory />
+                        </>
+                        : <></> }
+                        {/* <Box currentUser='null'> {JSON.stringify(currentUser.email)} </Box> */}
+                        {/* <Box> {JSON.stringify(currentUser.email)} </Box> */}
+                         {/* <AddNewStory /> */}
                         <LoginRegister />
                         <ColorModeSwitcher />
                     </Menu>
