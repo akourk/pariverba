@@ -12,6 +12,7 @@ import RegisterPage from './RegisterPage';
 import LoginPage from './LoginPage';
 import StoryList from './StoryList'
 import { AuthProvider } from '../context/AuthContext';
+import ForgotPassword from './ForgotPassword';
 
 const App = () => {
     const [stories, setStories] = useState([]);
@@ -73,6 +74,11 @@ const App = () => {
                                     <Route path="/"
                                     element={
                                         <StoryList />
+                                    }>
+                                    </Route>
+                                    <Route path="/forgot-password"
+                                    element={
+                                        <ForgotPassword />
                                     }>
                                     </Route>
                                 </Routes>

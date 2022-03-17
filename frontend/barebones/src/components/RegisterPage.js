@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { withRouter, useNavigate } from 'react-router-dom';
-import { Box, Stack, FormControl, Input, Button, FormErrorMessage, Text } from "@chakra-ui/react";
+import { Box, Alert, AlertIcon, Stack, FormControl, Input, Button, FormErrorMessage, Text } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext"
 
 export default function RegisterPage() {
@@ -42,6 +42,12 @@ export default function RegisterPage() {
         <Box w={300} m="auto">
             <form onSubmit={handleSubmit}>
                 <Stack spacing={3}>
+                    {error && (
+                        <Alert status="error">
+                            <AlertIcon />
+                            {error}
+                        </Alert>
+                    )}
                     <FormControl>
                             <Input
                                 id="email-input"
@@ -74,7 +80,7 @@ export default function RegisterPage() {
                             ref={passwordConfirmRef}
                             isRequired
                         />
-                        <FormErrorMessage>{error}</FormErrorMessage>
+                        {/* <FormErrorMessage>{error}</FormErrorMessage> */}
                     </FormControl>
                     <Button type="submit" disabled={loading}>
                         Register

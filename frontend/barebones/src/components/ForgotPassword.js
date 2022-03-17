@@ -1,35 +1,33 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { withRouter, useNavigate, Route, Routes } from 'react-router-dom';
-import { Box, Alert, AlertIcon, Link, Stack, FormControl, Input, Button, FormErrorMessage } from "@chakra-ui/react";
+import { Box, Alert, AlertIcon, Stack, FormControl, Input, Button, FormErrorMessage, AlertDialog } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext"
 
-export default function LoginPage() {
+export default function ForgotPassword() {
     const emailRef = useRef()
-    const passwordRef = useRef()
-    const { login } = useAuth()
+    const { passwordReset } = useAuth()
     const [error, setError] = useState("")
+    const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
-    useEffect(() => {
-        return () => {
-        };
-    }, [])
-
-    function handleForgotPassword(e) {
-        navigate("/forgot-password")
-    }
+    // useEffect(() => {
+    //     return () => {
+    //     };
+    // }, [])
 
     async function handleSubmit(e) {
         e.preventDefault()
     
         try {
-          setError("")
-          setLoading(true)
-          await login(emailRef.current.value, passwordRef.current.value)
-          navigate("/")
+            setMessage('')
+            setError("")
+            setLoading(true)
+            await passwordReset(emailRef.current.value)
+            setMessage('An email will be sent to your email with instructions on how to reset your password')
+            // navigate("/")
         } catch {
-          setError("Failed to sign in")
+            setError("Failed to reset password")
         }
     
         setLoading(false)
@@ -39,12 +37,13 @@ export default function LoginPage() {
         <Box w={300} m="auto">
             <form onSubmit={handleSubmit}>
                 <Stack spacing={3}>
-                    {error && (
-                        <Alert status="error">
+                    {message && (
+                        <Alert status="info">
                             <AlertIcon />
-                            {error}
+                            {message}
                         </Alert>
                     )}
+                    
                     <FormControl>
                         <Input
                             id="email-input"
@@ -56,22 +55,9 @@ export default function LoginPage() {
                             isRequired
                         />
                     </FormControl>
-                    <FormControl isInvalid={error}>
-                        <Input
-                            id="password-input"
-                            variant="filled"
-                            type="password"
-                            placeholder="password"
-                            size="md"
-                            ref={passwordRef}
-                            isRequired
-                        />
-                        {/* <FormErrorMessage>{error}</FormErrorMessage> */}
-                    </FormControl>
                     <Button type="submit" disabled={loading}>
-                        Login
+                        Reset Password
                     </Button>
-                    <Link onClick={handleForgotPassword}>Forgot Password?</Link>
                 </Stack>
             </form>
         </Box>
