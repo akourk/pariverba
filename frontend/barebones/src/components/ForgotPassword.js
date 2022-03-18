@@ -43,7 +43,12 @@ export default function ForgotPassword() {
                             {message}
                         </Alert>
                     )}
-                    
+                    {error && (
+                        <Alert status="error">
+                            <AlertIcon />
+                            {error}
+                        </Alert>
+                    )}
                     <FormControl>
                         <Input
                             id="email-input"
