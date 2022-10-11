@@ -4,10 +4,11 @@ import { Box, Alert, AlertIcon, Stack, FormControl, Input, Button, FormErrorMess
 import { useAuth } from "../context/AuthContext"
 
 export default function RegisterPage() {
+    const usernameRef = useRef()
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { register } = useAuth()
+    const { register, checkUsername, addUsername } = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
@@ -19,24 +20,27 @@ export default function RegisterPage() {
 
     async function handleSubmit(e) {
         e.preventDefault()
+        if (await checkUsername(usernameRef.current.value)) {
+            return setError("that username is already taken")
+        }
     
         if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-          return setError("Passwords do not match")
+            return setError("Passwords do not match")
         }
     
         try {
-          setError("")
-          setLoading(true)
-          await register(emailRef.current.value, passwordRef.current.value)
-          navigate("/")
+            setError("")
+            setLoading(true)
+            await register(usernameRef.current.value, emailRef.current.value, passwordRef.current.value)
+            // console.log(user.uid)
+            // await addUsername(usernameRef.current.value)
+            navigate("/")
         } catch {
-          setError("Failed to create an account")
+            setError("Failed to create an account")
         }
     
         setLoading(false)
       }
-
-
 
     return (
         <Box w={300} m="auto">
@@ -48,6 +52,17 @@ export default function RegisterPage() {
                             {error}
                         </Alert>
                     )}
+                    <FormControl>
+                            <Input
+                                id="username-input"
+                                variant="filled"
+                                type="username"
+                                placeholder="username"
+                                size="md"
+                                ref={usernameRef}
+                                isRequired
+                            />
+                    </FormControl>
                     <FormControl>
                             <Input
                                 id="email-input"
