@@ -1,4 +1,4 @@
-import { Box, useColorMode, HStack, VStack, Text, Flex } from "@chakra-ui/react";
+import { Box, useColorMode, HStack, VStack, Text, Flex, Spacer } from "@chakra-ui/react";
 import React from "react";
 import VoteButtons from "./voteButtons";
 import ThemedBox from "./ThemedBox";
@@ -41,13 +41,54 @@ const Story = ({ story }) => {
                             borderRadius="sm"
                             _hover={{ backgroundColor: postDetailBgColor}}
                         >
-                            <ChatIcon mr={2} />
-                            comments
+                            
+                            {/* <ChatIcon mr={2} />
+                            comments */}
+                            
 
                         </Box>
                     </Flex>
                 </VStack>
-                <Text>{story.title}</Text>
+
+                <VStack
+                // height="100%"
+                    // align='stretch'
+                >
+                    <Flex
+                    direction='column'
+                    height='100%'
+                    >
+                        <Box>
+                            <Text
+                            noOfLines={2}
+                            >
+                                {story.title}
+                            </Text>
+                        </Box>
+                        <Spacer mb={10}/>
+                        {/* <Spacer /> */}
+                        <Box>
+                            <ChatIcon mr={2} />
+                            comments
+                        </Box>
+                    </Flex>
+
+                </VStack>
+
+
+
+                {/* <VStack
+                    align='stretch'
+                >
+                    <Box>
+                        <Text>{story.title}</Text>
+                    </Box>
+                    <Box>
+                        <ChatIcon mr={2} />
+                        comments
+                    </Box>
+                </VStack> */}
+                
                 {/* <Box bg="gray.100" p={4} rounded="md" w="100%"> */}
                 
                 {/* </Box> */}

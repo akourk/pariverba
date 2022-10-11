@@ -58,19 +58,23 @@ const VoteButtons = ({ story }) => {
         setVoting(true);
         let upVotesCount = story.upVotesCount;
         let downVotesCount = story.downVotesCount;
+        let voteSum = upVotesCount - downVotesCount;
 
         const date = new Date();
 
         if (type === "upvote") {
             upVotesCount = upVotesCount + 1;
+            voteSum = voteSum + 1;
         } else {
             downVotesCount = downVotesCount + 1;
+            voteSum = voteSum - 1;
         }
 
         await db.collection("stories").doc(story.id).set({
             title: story.title,
             upVotesCount,
             downVotesCount,
+            voteSum,
             createdAt: story.createdAt,
             updatedAt: date.toUTCString()
         });

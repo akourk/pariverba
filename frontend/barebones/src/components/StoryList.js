@@ -13,7 +13,7 @@ const StoryList = () => {
         // change in the datastore (https://firebase.google.com/docs/firestore/query-data/listen#view_changes_between_snapshots)
 
         db.collection("stories")
-            .orderBy("createdAt", "desc")
+            .orderBy("voteSum", "desc")
             .onSnapshot((querySnapshot) => {
                 const _stories = [];
 

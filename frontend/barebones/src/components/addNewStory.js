@@ -28,6 +28,7 @@ const AddNewStory = () => {
             title,
             upVotesCount: 0,
             downVotesCount: 0,
+            voteSum: 0,
             createdAt: date.toUTCString(),
             updatedAt: date.toUTCString(),
         });
